@@ -1,7 +1,11 @@
 
-function! g:CopyFileEntryToClipBoard() "for syntax/index.vim {{{
-    let @+ = expand("%:p").'|'.line(".")
+function! g:CopyFileEntryToClipBoard(var) "for syntax/index.vim {{{
+    if len(a:var) == 0
+        let @+ = expand("%:p").'|'.line(".")
+    else
+        let @+ = fnamemodify(a:var, ":p")
+    endif
 endfunction
-silent! command -nargs=0 CopyEntry	call g:CopyFileEntryToClipBoard()
+silent! command -nargs=? -complete=file CopyEntry	call g:CopyFileEntryToClipBoard("<args>")
 "}}}
 
